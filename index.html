@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="سبيتة الفارة">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="theme-color" content="#141414">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:#141414}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>سبيتة الفارة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<style>
+/* Layout: one-column card table — felt ground, two ivory "cards" (teams) side by side, round panel below, ledger last */
+:root{
+  /* single look by choice: playing-card colors only — black table, white cards, red */
+  --felt:#141414; --felt-deep:#0a0a0a; --card:#ffffff; --ink:#111111; --muted:#6b6b6b;
+  --line:#e2e2e2; --gold:#d0202e; --red:#d0202e; --win:#111111; --tint:#fbeaec;
+  --on-felt:#ffffff; --on-felt-dim:#a3a3a3;
+  --display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+  background:var(--felt);
+  background-image:radial-gradient(ellipse at 50% 0%, color-mix(in srgb,var(--felt) 70%, #fff 6%) 0%, var(--felt) 55%, var(--felt-deep) 100%);
+  color:var(--on-felt); font-family:var(--body); font-size:16px; line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:20px 40px;
+}
+.wrap{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:34px;height:34px;flex:none}
+h1{font-family:var(--display);font-weight:700;font-size:1.7rem;margin:0;line-height:1.1}
+.sub{color:var(--on-felt-dim);font-size:.8rem}
+.ghost{background:none;border:1px solid color-mix(in srgb,var(--on-felt) 30%,transparent);color:var(--on-felt);
+  font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.card{background:var(--card);color:var(--ink);border-radius:14px;position:relative;
+  box-shadow:0 1px 0 rgba(0,0,0,.25),0 10px 24px -12px rgba(0,0,0,.55)}
+.pip{position:absolute;font-family:var(--display);font-size:.95rem;line-height:1;text-align:center;color:var(--ink)}
+.pip.tl{top:8px;right:10px}.pip.br{bottom:8px;left:10px;transform:rotate(180deg)}
+.pip b{display:block;font-size:1.05rem}
+
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.team{padding:26px 14px 18px;min-width:0;text-align:center;display:flex;flex-direction:column;gap:6px;transition:transform .25s}
+.team.lead{transform:translateY(-4px)}
+.team .name{font-family:var(--display);font-size:1.05rem;font-weight:700;overflow-wrap:anywhere}
+.team .score{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.team .score.neg{color:var(--red)}
+.team .togo{font-size:.78rem;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;background:var(--ink);border-radius:3px;transition:width .4s}
+.lead .bar i{background:var(--gold)}
+.crown{font-size:.7rem;letter-spacing:.04em;color:var(--gold);font-weight:700;min-height:1.1em}
+
+.panel{padding:20px 16px 18px;display:flex;flex-direction:column;gap:14px}
+.panel.editing{outline:3px solid var(--gold);outline-offset:-3px}
+.panel h2{font-family:var(--display);font-size:1.15rem;margin:0;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chip{font-family:var(--body);font-size:.72rem;font-weight:700;background:var(--ink);color:var(--card);padding:3px 10px;border-radius:999px}
+.hint{font-size:.82rem;color:var(--muted);margin:0}
+.sect{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.04em;margin:4px 0 -6px}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;padding:10px 0;border-top:1px dashed var(--line)}
+.rows>.row:first-child{border-top:0}
+.row .lbl{min-width:0}
+.row .lbl strong{display:block;font-size:.98rem;overflow-wrap:anywhere}
+.row .lbl small{color:var(--muted);font-size:.78rem}
+.step{display:flex;align-items:center;gap:6px;direction:ltr}
+.step button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  font-size:1.4rem;font-weight:700;cursor:pointer;line-height:1}
+.step button:disabled{opacity:.25;cursor:default}
+.step input{width:56px;height:44px;text-align:center;font-family:var(--display);font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;
+  border:0;border-bottom:2px solid var(--line);background:transparent;color:var(--ink);border-radius:0;padding:0}
+.step input:focus{border-bottom-color:var(--gold);outline:none}
+.step input.bad{border-bottom-color:var(--red);color:var(--red)}
+.pts{font-size:.8rem;font-weight:700;font-variant-numeric:tabular-nums}
+.pts.ok{color:var(--win)}.pts.bad{color:var(--red)}
+.primary{width:100%;border:0;border-radius:12px;padding:14px;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;
+  background:var(--ink);color:var(--card)}
+.primary:disabled{opacity:.35;cursor:default}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions .primary{flex:1 1 140px;width:auto}
+.secondary{flex:0 0 auto;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:12px;padding:10px 16px;font:inherit;font-weight:500;cursor:pointer}
+.danger{border-color:var(--red);color:var(--red)}
+.warn{font-size:.8rem;color:var(--red);margin:0;min-height:1.2em}
+
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:.85rem;color:var(--muted);font-weight:500}
+.field input{font:inherit;font-size:1.05rem;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:transparent;color:var(--ink);width:100%}
+.rules{font-size:.82rem;color:var(--muted);margin:0;padding-inline-start:18px;display:flex;flex-direction:column;gap:2px}
+
+.ledger{padding:18px 14px 12px}
+.ledger h2{font-family:var(--display);font-size:1.05rem;margin:0 0 2px}
+.ledger .hint{margin-bottom:8px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.85rem}
+th,td{padding:7px 4px;text-align:center;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--muted);font-size:.75rem}
+td.n{color:var(--muted)}
+tr.on td{background:var(--tint)}
+.d{font-weight:700}.d.ok{color:var(--win)}.d.bad{color:var(--red)}
+.ed{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:.75rem;cursor:pointer}
+.empty{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 0;margin:0}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.ghost.solid{background:var(--card);color:var(--ink);border-color:var(--card);font-weight:700}
+.team .players{font-size:.75rem;color:var(--muted);overflow-wrap:anywhere;margin-top:-4px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pair input{font-size:.92rem;padding:9px 12px}
+.opt{font-weight:400;color:var(--muted);font-size:.75rem}
+.teamset{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
+.teamset:first-of-type{border-top:0;padding-top:0}
+.arch{padding:18px 14px;display:flex;flex-direction:column;gap:10px}
+.arch h2{font-family:var(--display);font-size:1.15rem;margin:0}
+.game{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.game summary{list-style:none;cursor:pointer;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center}
+.game summary::-webkit-details-marker{display:none}
+.game .vs{font-weight:700;overflow-wrap:anywhere;min-width:0}
+.game .fs{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.game .meta{grid-column:1/-1;font-size:.75rem;color:var(--muted)}
+.game .wb{color:var(--win);font-weight:700}
+.game .body{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
+.game[open] summary{background:var(--tint)}
+.foot{color:var(--on-felt-dim);font-size:.75rem;text-align:center}
+
+.win{position:fixed;inset:0;display:grid;place-items:center;z-index:10;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:color-mix(in srgb,var(--felt-deep) 88%,transparent)}
+.win canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.wincard{width:min(340px,100%);aspect-ratio:5/7;max-width:100%;padding:28px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;
+  border:3px solid var(--gold);animation:flip .9s cubic-bezier(.2,.8,.2,1) both}
+.wincard .big{width:84px;height:84px}
+.wincard .kicker{font-size:.8rem;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.wincard .wname{font-family:var(--display);font-size:2.1rem;font-weight:700;line-height:1.15;overflow-wrap:anywhere;text-wrap:balance}
+.wincard .final{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.95rem}
+.wincard .primary{margin-top:10px}
+@keyframes flip{from{transform:perspective(800px) rotateY(90deg) scale(.8);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.wincard{animation:none}.team,.bar i{transition:none}}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="spade" viewBox="0 0 100 110"><path fill="currentColor" d="M50 4C38 26 6 42 6 66c0 14 11 24 24 24 8 0 14-3 17-8-1 10-5 17-13 24h32c-8-7-12-14-13-24 3 5 9 8 17 8 13 0 24-10 24-24C94 42 62 26 50 4z"/></symbol>
+</svg>
+
+<div class="wrap" dir="rtl">
+  <header>
+    <div class="brand">
+      <svg style="color:var(--on-felt)"><use href="#spade"/></svg>
+      <div><h1>سبيتة الفارة</h1><div class="sub">الحكم السبيت ♠ · الفوز عند ٦٠٠</div></div>
+    </div>
+    <div class="hbtns">
+      <button class="ghost" id="archBtn" type="button">الأرشيف</button>
+      <button class="ghost solid" id="newBtn" type="button" hidden>لعبة جديدة</button>
+    </div>
+  </header>
+
+  <section id="archive" class="card arch" hidden>
+    <h2>أرشيف الرصد</h2>
+    <p class="hint">كل لعبة تنحفظ هنا لما تبدأون لعبة جديدة. اضغط على اللعبة تشوف جولاتها.</p>
+    <div id="archList" style="display:flex;flex-direction:column;gap:8px"></div>
+    <p class="empty" id="archEmpty">الأرشيف فاضي.</p>
+  </section>
+
+  <section id="setup" class="card panel">
+    <span class="pip tl">إ<b>♠</b></span>
+    <h2>الفريقين</h2>
+    <div class="teamset">
+      <div class="field"><label for="nA">الفريق الأول (باسم شخص)</label><input id="nA" maxlength="24" value="بو محمد" autocomplete="off"></div>
+      <div class="field"><label>اللاعبين <span class="opt">اختياري</span></label>
+        <div class="pair"><input id="pA1" maxlength="20" placeholder="لاعب ١" autocomplete="off"><input id="pA2" maxlength="20" placeholder="لاعب ٢" autocomplete="off"></div></div>
+    </div>
+    <div class="teamset">
+      <div class="field"><label for="nB">الفريق الثاني (باسم شخص)</label><input id="nB" maxlength="24" value="بو خالد" autocomplete="off"></div>
+      <div class="field"><label>اللاعبين <span class="opt">اختياري</span></label>
+        <div class="pair"><input id="pB1" maxlength="20" placeholder="لاعب ١" autocomplete="off"><input id="pB2" maxlength="20" placeholder="لاعب ٢" autocomplete="off"></div></div>
+    </div>
+    <ul class="rules">
+      <li>شراء كل فريق من ٤ إلى ١٣ أكلة (كل أكلة = ١٠ نقاط)</li>
+      <li>تحقق الشراء: الشراء × ١٠ + نقطة لكل أكلة زايدة</li>
+      <li>ما تحقق: سالب الشراء × ١٠</li>
+      <li>يفوز أول فريق يوصل ٦٠٠ وهو متقدم، ولو بنقطة</li>
+    </ul>
+    <button class="primary" id="startBtn" type="button">ابدأ المنافسة</button>
+  </section>
+
+  <div id="game" hidden>
+    <div class="wrap">
+      <div class="teams">
+        <div class="card team" id="tA"><span class="pip tl">ش<b>♠</b></span><span class="pip br">ش<b>♠</b></span>
+          <div class="crown" id="cA"></div><div class="name" id="nameA"></div><div class="players" id="plA"></div><div class="score" id="sA">0</div>
+          <div class="bar"><i id="bA" style="width:0"></i></div><div class="togo" id="gA"></div></div>
+        <div class="card team" id="tB"><span class="pip tl">ب<b>♠</b></span><span class="pip br">ب<b>♠</b></span>
+          <div class="crown" id="cB"></div><div class="name" id="nameB"></div><div class="players" id="plB"></div><div class="score" id="sB">0</div>
+          <div class="bar"><i id="bB" style="width:0"></i></div><div class="togo" id="gB"></div></div>
+      </div>
+
+      <section class="card panel" id="panel">
+        <h2><span id="pTitle">الشراء</span><span class="chip" id="roundChip">الجولة ١</span></h2>
+        <p class="hint" id="pHint"></p>
+
+        <div id="bidBox">
+          <div class="sect" id="bidSect">الشراء</div>
+          <div class="rows">
+            <div class="row"><div class="lbl"><strong id="bLA"></strong><small id="bPA"></small></div>
+              <div class="step"><button type="button" data-k="bidA" data-d="-1" aria-label="نقص">−</button><input id="in-bidA" data-k="bidA" inputmode="numeric" autocomplete="off" aria-label="شراء الفريق الأول"><button type="button" data-k="bidA" data-d="1" aria-label="زيد">+</button></div></div>
+            <div class="row"><div class="lbl"><strong id="bLB"></strong><small id="bPB"></small></div>
+              <div class="step"><button type="button" data-k="bidB" data-d="-1" aria-label="نقص">−</button><input id="in-bidB" data-k="bidB" inputmode="numeric" autocomplete="off" aria-label="شراء الفريق الثاني"><button type="button" data-k="bidB" data-d="1" aria-label="زيد">+</button></div></div>
+          </div>
+        </div>
+
+        <div id="trickBox" hidden>
+          <div class="sect" id="trickSect">الأكلات</div>
+          <div class="rows">
+            <div class="row"><div class="lbl"><strong id="tLA"></strong><small id="tSA"></small></div>
+              <div class="step"><button type="button" data-k="tricksA" data-d="-1" aria-label="نقص">−</button><input id="in-tricksA" data-k="tricksA" inputmode="numeric" autocomplete="off" aria-label="أكلات الفريق الأول"><button type="button" data-k="tricksA" data-d="1" aria-label="زيد">+</button></div></div>
+            <div class="row"><div class="lbl"><strong id="tLB"></strong><small id="tSB"></small></div>
+              <div class="step"><button type="button" data-k="tricksB" data-d="-1" aria-label="نقص">−</button><input id="in-tricksB" data-k="tricksB" inputmode="numeric" autocomplete="off" aria-label="أكلات الفريق الثاني"><button type="button" data-k="tricksB" data-d="1" aria-label="زيد">+</button></div></div>
+          </div>
+        </div>
+
+        <p class="warn" id="warn"></p>
+        <div class="actions">
+          <button class="secondary" id="backBtn" type="button" hidden>رجوع</button>
+          <button class="secondary danger" id="delBtn" type="button" hidden>حذف الجولة</button>
+          <button class="primary" id="goBtn" type="button">ثبّت الشراء</button>
+        </div>
+      </section>
+
+      <section class="card ledger">
+        <h2>سجل الجولات</h2>
+        <p class="hint">لو انكتب رقم غلط، اضغط «تعديل» على الجولة.</p>
+        <div class="tbl"><table>
+          <thead><tr><th>#</th><th id="hA">أ</th><th>المجموع</th><th id="hB">ب</th><th>المجموع</th><th></th></tr></thead>
+          <tbody id="log"></tbody>
+        </table></div>
+        <p class="empty" id="empty">ما فيه جولات للحين.</p>
+      </section>
+    </div>
+  </div>
+  <p class="foot">الحساب محفوظ في هذا المتصفح · الأرقام تنكتب عربي أو إنجليزي</p>
+</div>
+
+<div class="win" id="win" hidden>
+  <canvas id="fx"></canvas>
+  <div class="card wincard" dir="rtl">
+    <span class="pip tl">إ<b>♠</b></span><span class="pip br">إ<b>♠</b></span>
+    <svg class="big" style="color:var(--ink)"><use href="#spade"/></svg>
+    <div class="kicker">بطل سبيتة الفارة</div>
+    <div class="wname" id="wName"></div>
+    <div class="final" id="wFinal"></div>
+    <button class="primary" id="againBtn" type="button">لعبة جديدة</button>
+    <button class="ghost" id="closeWin" type="button" style="color:var(--muted);border-color:var(--line)">عرض السجل</button>
+  </div>
+</div>
+
+<script>
+const TARGET=600, MIN=4, MAX=13, TOTAL=13;
+const ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const sgn=n=>(n>0?'+':n<0?'−':'')+ar(Math.abs(n));
+const sn=n=>n<0?'−'+ar(-n):ar(n);
+// accepts 0-9, ٠-٩ and ۰-۹
+function toNum(s){
+  const t=String(s).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-0x660).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-0x6F0).replace(/[^0-9]/g,'');
+  return t===''?null:parseInt(t,10);
+}
+function roundPts(bid,tricks){return tricks>=bid? bid*10+(tricks-bid) : -bid*10;}
+function winner(a,b){ if((a>=TARGET||b>=TARGET)&&a!==b) return a>b?'A':'B'; return null; }
+const range=k=>k.startsWith('bid')?[MIN,MAX]:[0,TOTAL];
+
+let S=load()||fresh();
+if(!('ed' in S)) S.ed=null;
+function fresh(){return{names:null,players:[[],[]],rounds:[],phase:'bid',bidA:4,bidB:4,tricksA:0,tricksB:0,done:false,ed:null,started:Date.now()};}
+let view='main';
+function loadArch(){try{return JSON.parse(localStorage.getItem('sbeeta-archive'))||[]}catch(e){return[]}}
+function saveArch(a){try{localStorage.setItem('sbeeta-archive',JSON.stringify(a))}catch(e){}}
+let ARCH=loadArch();
+function archiveCurrent(){
+  if(!S.names||!S.rounds.length) return;
+  const t=totals(), w=winner(t.A,t.B);
+  ARCH.unshift({id:Date.now(),date:Date.now(),names:S.names,players:S.players||[[],[]],rounds:S.rounds,A:t.A,B:t.B,w});
+  saveArch(ARCH);
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fmtDate(ms){try{return new Intl.DateTimeFormat('ar',{dateStyle:'medium',timeStyle:'short'}).format(ms)}catch(e){return new Date(ms).toLocaleString()}}
+function renderArch(){
+  $('archEmpty').hidden=ARCH.length>0;
+  $('archList').innerHTML=ARCH.map((g,gi)=>{
+    const pl=i=>(g.players&&g.players[i]&&g.players[i].length)?' ('+g.players[i].map(esc).join(' و ')+')':'';
+    let run={A:0,B:0};
+    const rows=g.rounds.map((r,i)=>{run.A+=r.pA;run.B+=r.pB;
+      return '<tr><td class="n">'+ar(i+1)+'</td><td><span class="d '+(r.pA>=0?'ok':'bad')+'">'+sgn(r.pA)+'</span> <small style="color:var(--muted)">'+ar(r.tA)+'/'+ar(r.bidA)+'</small></td><td>'+sn(run.A)+'</td><td><span class="d '+(r.pB>=0?'ok':'bad')+'">'+sgn(r.pB)+'</span> <small style="color:var(--muted)">'+ar(r.tB)+'/'+ar(r.bidB)+'</small></td><td>'+sn(run.B)+'</td></tr>';}).join('');
+    const status=g.w?'<span class="wb">الفائز: '+esc(g.names[g.w==='A'?0:1])+'</span>':'ما انتهت';
+    return '<details class="game"><summary><span class="vs">'+esc(g.names[0])+' × '+esc(g.names[1])+'</span><span class="fs">'+sn(g.A)+' – '+sn(g.B)+'</span><span class="meta">'+fmtDate(g.date)+' · '+ar(g.rounds.length)+' جولة · '+status+'</span></summary>'
+      +'<div class="body"><div class="hint">'+esc(g.names[0])+pl(0)+'<br>'+esc(g.names[1])+pl(1)+'</div>'
+      +'<div class="tbl"><table><thead><tr><th>#</th><th>'+esc(g.names[0])+'</th><th>المجموع</th><th>'+esc(g.names[1])+'</th><th>المجموع</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+      +'<div class="actions"><button class="secondary danger" type="button" data-adel="'+gi+'">حذف من الأرشيف</button></div></div></details>';
+  }).join('');
+}
+function load(){try{return JSON.parse(localStorage.getItem('sbeeta-v1'))}catch(e){return null}}
+function save(){try{localStorage.setItem('sbeeta-v1',JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const totals=()=>S.rounds.reduce((t,r)=>(t.A+=r.pA,t.B+=r.pB,t),{A:0,B:0});
+const cur=()=>S.ed||S; // draft being edited: past round or live round
+
+function setVal(k,v){
+  const o=cur(),[lo,hi]=range(k);
+  o[k]=Math.min(hi,Math.max(lo,v));
+  if(k.startsWith('tricks')){const other=k==='tricksA'?'tricksB':'tricksA'; o[other]=TOTAL-o[k];}
+}
+
+function render(){
+  const started=!!S.names, arch=view==='archive';
+  $('archive').hidden=!arch; $('archBtn').textContent=arch?'رجوع للعبة':'الأرشيف';
+  $('setup').hidden=arch||started; $('game').hidden=arch||!started; $('newBtn').hidden=arch||!started;
+  if(arch){renderArch();return;}
+  if(!started) return;
+  const [A,B]=S.names, t=totals(), o=cur(), ed=!!S.ed;
+  $('nameA').textContent=A; $('nameB').textContent=B;
+  const P=S.players||[[],[]];
+  $('plA').textContent=P[0].join(' و '); $('plB').textContent=P[1].join(' و ');
+  for(const k of ['A','B']){
+    const v=t[k], el=$('s'+k);
+    el.textContent=sn(v); el.classList.toggle('neg',v<0);
+    $('b'+k).style.width=Math.max(0,Math.min(100,v/TARGET*100))+'%';
+    $('g'+k).textContent=v>=TARGET?'وصل ٦٠٠':'باقي '+ar(TARGET-v);
+  }
+  const lead=t.A===t.B?null:(t.A>t.B?'A':'B');
+  $('tA').classList.toggle('lead',lead==='A'); $('tB').classList.toggle('lead',lead==='B');
+  $('cA').textContent=lead==='A'?'متقدم':''; $('cB').textContent=lead==='B'?'متقدم':'';
+  if(t.A>=TARGET&&t.A===t.B){$('cA').textContent=$('cB').textContent='تعادل · كمّلوا';}
+
+  const bidPhase=!ed&&S.phase==='bid';
+  $('panel').classList.toggle('editing',ed);
+  $('roundChip').textContent='الجولة '+ar(ed?S.ed.i+1:S.rounds.length+1);
+  $('bidBox').hidden=!(ed||bidPhase); $('trickBox').hidden=bidPhase;
+  $('bidSect').hidden=!ed; $('trickSect').hidden=!ed;
+  $('backBtn').hidden=bidPhase; $('backBtn').textContent=ed?'إلغاء':'رجوع';
+  $('delBtn').hidden=!ed;
+  $('pTitle').textContent=ed?'تعديل الجولة':bidPhase?'الشراء':'الأكلات';
+  $('pHint').textContent=ed?'صحّح الشراء أو الأكلات، والمجموع ينحسب من جديد.'
+    :bidPhase?'حددوا كم أكلة يشتري كل فريق قبل اللعب.':'بعد اللعب: كم أكلة أكل كل فريق؟ المجموع لازم ١٣.';
+  $('bLA').textContent=A; $('bLB').textContent=B;
+  $('bPA').textContent='يكسب '+ar(o.bidA*10)+' أو يخسر '+ar(o.bidA*10);
+  $('bPB').textContent='يكسب '+ar(o.bidB*10)+' أو يخسر '+ar(o.bidB*10);
+  for(const k of ['bidA','bidB','tricksA','tricksB']){
+    const inp=$('in-'+k);
+    if(document.activeElement!==inp){inp.value=ar(o[k]);inp.classList.remove('bad');}
+  }
+  for(const k of ['A','B']){
+    const p=roundPts(o['bid'+k],o['tricks'+k]);
+    $('tL'+k).textContent=(k==='A'?A:B)+' · شاري '+ar(o['bid'+k]);
+    $('tS'+k).innerHTML='<span class="pts '+(p>=0?'ok':'bad')+'">'+sgn(p)+'</span>';
+  }
+  const sum=o.tricksA+o.tricksB;
+  $('warn').textContent=(!bidPhase&&sum!==TOTAL)?'المجموع '+ar(sum)+' من ١٣':'';
+  $('goBtn').textContent=ed?'احفظ التعديل':bidPhase?'ثبّت الشراء':'احسب الجولة';
+  $('goBtn').disabled=!bidPhase&&sum!==TOTAL;
+  document.querySelectorAll('.step button').forEach(b=>{
+    const k=b.dataset.k,d=+b.dataset.d,v=o[k],[lo,hi]=range(k);
+    b.disabled=(d<0&&v<=lo)||(d>0&&v>=hi);
+  });
+
+  $('hA').textContent=A; $('hB').textContent=B;
+  let run={A:0,B:0};
+  $('log').innerHTML=S.rounds.map((r,i)=>{run.A+=r.pA;run.B+=r.pB;
+    const c=(p,bd,tk)=>'<td><span class="d '+(p>=0?'ok':'bad')+'">'+sgn(p)+'</span><br><small style="color:var(--muted)">'+ar(tk)+'/'+ar(bd)+'</small></td>';
+    return '<tr'+(ed&&S.ed.i===i?' class="on"':'')+'><td class="n">'+ar(i+1)+'</td>'+c(r.pA,r.bidA,r.tA)+'<td>'+sn(run.A)+'</td>'+c(r.pB,r.bidB,r.tB)+'<td>'+sn(run.B)+'</td><td><button class="ed" type="button" data-edit="'+i+'">تعديل</button></td></tr>';
+  }).reverse().join('');
+  $('empty').hidden=S.rounds.length>0;
+  const w=winner(t.A,t.B);
+  $('panel').hidden=!!w&&!ed;
+  if(!w) S.done=false;
+  if(w&&!S.done&&!ed){S.done=true;showWin(w,t);}
+  save();
+}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.step button');
+  if(b){setVal(b.dataset.k,cur()[b.dataset.k]+(+b.dataset.d));render();return;}
+  const eb=e.target.closest('[data-edit]');
+  if(eb){const i=+eb.dataset.edit,r=S.rounds[i];
+    S.ed={i,bidA:r.bidA,bidB:r.bidB,tricksA:r.tA,tricksB:r.tB}; confirmDel=false; $('delBtn').textContent='حذف الجولة';
+    render(); $('panel').scrollIntoView({behavior:'smooth',block:'start'});}
+});
+// typed numbers: Arabic or English digits
+document.querySelectorAll('.step input').forEach(inp=>{
+  const k=inp.dataset.k;
+  inp.addEventListener('focus',()=>inp.select());
+  inp.addEventListener('input',()=>{
+    const n=toNum(inp.value),[lo,hi]=range(k);
+    const ok=n!==null&&n>=lo&&n<=hi;
+    inp.classList.toggle('bad',!ok&&inp.value!=='');
+    if(ok){setVal(k,n);render();}
+  });
+  inp.addEventListener('change',()=>{const n=toNum(inp.value); if(n!==null) setVal(k,n); inp.blur(); render();});
+  inp.addEventListener('blur',()=>render());
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter') inp.blur();});
+});
+
+$('startBtn').onclick=()=>{
+  const a=$('nA').value.trim()||'الفريق الأول', b=$('nB').value.trim()||'الفريق الثاني';
+  const pl=(x,y)=>[$(x).value.trim(),$(y).value.trim()].filter(Boolean);
+  S=fresh(); S.names=[a,b]; S.players=[pl('pA1','pA2'),pl('pB1','pB2')]; render();
+};
+$('archBtn').onclick=()=>{view=view==='archive'?'main':'archive';render();scrollTo({top:0});};
+let delArch=-1;
+$('archList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-adel]'); if(!b) return;
+  const i=+b.dataset.adel;
+  if(delArch!==i){delArch=i;b.textContent='متأكد؟ اضغط مرة ثانية';setTimeout(()=>{if(delArch===i){delArch=-1;b.textContent='حذف من الأرشيف';}},3000);return;}
+  delArch=-1; ARCH.splice(i,1); saveArch(ARCH); renderArch();
+});
+function newGame(){
+  archiveCurrent();
+  const n=S.names,p=S.players||[[],[]];
+  S=fresh();
+  if(n){$('nA').value=n[0];$('nB').value=n[1];}
+  $('pA1').value=p[0][0]||'';$('pA2').value=p[0][1]||'';$('pB1').value=p[1][0]||'';$('pB2').value=p[1][1]||'';
+  hideWin(); view='main'; render(); scrollTo({top:0});
+}
+$('goBtn').onclick=()=>{
+  if(S.ed){
+    const e=S.ed; if(e.tricksA+e.tricksB!==TOTAL) return;
+    S.rounds[e.i]={bidA:e.bidA,bidB:e.bidB,tA:e.tricksA,tB:e.tricksB,pA:roundPts(e.bidA,e.tricksA),pB:roundPts(e.bidB,e.tricksB)};
+    S.ed=null; S.done=false; render(); return;
+  }
+  if(S.phase==='bid'){S.phase='tricks';S.tricksA=Math.min(TOTAL,S.bidA);S.tricksB=TOTAL-S.tricksA;render();return;}
+  if(S.tricksA+S.tricksB!==TOTAL) return;
+  S.rounds.push({bidA:S.bidA,bidB:S.bidB,tA:S.tricksA,tB:S.tricksB,pA:roundPts(S.bidA,S.tricksA),pB:roundPts(S.bidB,S.tricksB)});
+  S.phase='bid'; S.bidA=4; S.bidB=4; render();
+};
+$('backBtn').onclick=()=>{ if(S.ed){S.ed=null;} else S.phase='bid'; render(); };
+let confirmDel=false;
+$('delBtn').onclick=()=>{
+  if(!confirmDel){confirmDel=true;$('delBtn').textContent='متأكد؟ اضغط مرة ثانية';setTimeout(()=>{confirmDel=false;$('delBtn').textContent='حذف الجولة'},3000);return;}
+  confirmDel=false;$('delBtn').textContent='حذف الجولة';
+  S.rounds.splice(S.ed.i,1); S.ed=null; S.done=false; render();
+};
+let confirmNew=false;
+$('newBtn').onclick=()=>{
+  const t=totals();
+  if(!confirmNew&&S.rounds.length&&!winner(t.A,t.B)){confirmNew=true;$('newBtn').textContent='اللعبة ما خلصت، متأكد؟';setTimeout(()=>{confirmNew=false;$('newBtn').textContent='لعبة جديدة'},3000);return;}
+  confirmNew=false;$('newBtn').textContent='لعبة جديدة';
+  newGame();
+};
+$('againBtn').onclick=newGame;
+$('closeWin').onclick=hideWin;
+
+let raf=0;
+function showWin(w,t){
+  const i=w==='A'?0:1;
+  $('wName').textContent=S.names[i];
+  $('wFinal').textContent=sn(Math.max(t.A,t.B))+' مقابل '+sn(Math.min(t.A,t.B));
+  $('win').hidden=false;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv=$('fx'),cx=cv.getContext('2d'),dpr=devicePixelRatio||1;
+  const W=cv.width=innerWidth*dpr,H=cv.height=innerHeight*dpr;
+  const suits=['♠','♠','♠','♥','♦','♣'];
+  const ps=Array.from({length:70},()=>({x:Math.random()*W,y:-Math.random()*H,v:(1.5+Math.random()*3)*dpr,r:Math.random()*6,s:(16+Math.random()*22)*dpr,w:(Math.random()-.5)*.06,c:suits[Math.random()*6|0]}));
+  const start=performance.now(), cs=getComputedStyle(document.documentElement);
+  const cols={'♠':'#f7f5ef','♣':'#f7f5ef','♥':cs.getPropertyValue('--red'),'♦':cs.getPropertyValue('--gold')};
+  (function f(now){cx.clearRect(0,0,W,H);
+    for(const p of ps){p.y+=p.v;p.r+=p.w;if(p.y>H+40&&now-start<5000)p.y=-40;
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.font=p.s+'px serif';cx.fillStyle=cols[p.c];cx.fillText(p.c,0,0);cx.restore();}
+    if(now-start<9000) raf=requestAnimationFrame(f);
+  })(start);
+}
+function hideWin(){$('win').hidden=true;cancelAnimationFrame(raf);}
+S.done=false;
+render();
+</script>
+
+</body>
+</html>
