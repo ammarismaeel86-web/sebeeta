@@ -138,6 +138,8 @@ tr.on td{background:var(--tint)}
 .opt{font-weight:400;color:var(--muted);font-size:.75rem}
 .teamset{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
 .teamset:first-of-type{border-top:0;padding-top:0}
+.refset{background:var(--tint);border:0;border-radius:12px;padding:12px!important}
+.refline{font-size:.78rem;color:var(--on-felt-dim);text-align:center;margin-top:-8px}
 .sethead{font-family:var(--display);font-weight:700;font-size:1rem}
 .field select{font:inherit;font-size:1.05rem;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%;appearance:auto}
 .newp{display:flex;flex-direction:column;gap:6px;padding:12px;border:2px dashed var(--red);border-radius:12px}
@@ -226,6 +228,9 @@ tr.on td{background:var(--tint)}
       <div class="field"><label for="pB1">اسم الفريق <span class="opt">وهو اللاعب الأول</span></label><select id="pB1"></select></div>
       <div class="field"><label for="pB2">اللاعب الثاني <span class="opt">اختياري</span></label><select id="pB2"></select></div>
     </div>
+    <div class="teamset refset">
+      <div class="field"><label for="ref">الحكم (مسجّل النتائج) <span class="opt">ممكن يكون لاعب</span></label><select id="ref"></select></div>
+    </div>
     <div class="newp" id="newBox" hidden>
       <label for="newName">اسم اللاعب الجديد</label>
       <div class="newrow"><input id="newName" maxlength="20" autocomplete="off"><button class="secondary" id="addP" type="button">إضافة</button><button class="secondary" id="cancelP" type="button">إلغاء</button></div>
@@ -242,6 +247,7 @@ tr.on td{background:var(--tint)}
 
   <div id="game" hidden>
     <div class="wrap">
+      <div class="refline" id="refLine" hidden></div>
       <div class="teams">
         <div class="card team" id="tA"><span class="pip tl">ش<b>♠</b></span><span class="pip br">ش<b>♠</b></span>
           <div class="crown" id="cA"></div><div class="deal" id="dA" hidden>♠ يوزّع الورق</div><div class="name" id="nameA"></div><div class="players" id="plA"></div><div class="score" id="sA">0</div>
@@ -334,7 +340,7 @@ let ARCH=loadArch();
 function archiveCurrent(){
   if(!S.names||!S.rounds.length) return;
   const t=totals(), w=winner(t.A,t.B);
-  ARCH.unshift({id:Date.now(),date:Date.now(),names:S.names,players:S.players||[[],[]],rounds:S.rounds,A:t.A,B:t.B,w});
+  ARCH.unshift({id:Date.now(),date:Date.now(),names:S.names,players:S.players||[[],[]],referee:S.referee||'',rounds:S.rounds,A:t.A,B:t.B,w});
   saveArch(ARCH);
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -371,7 +377,7 @@ function renderArch(){
     const rows=g.rounds.map((r,i)=>{run.A+=r.pA;run.B+=r.pB;
       return '<tr><td class="n">'+ar(i+1)+'</td><td><span class="d '+(r.pA>=0?'ok':'bad')+'">'+sgn(r.pA)+'</span> <small style="color:var(--muted)">'+ar(r.tA)+'/'+ar(r.bidA)+'</small></td><td>'+sn(run.A)+'</td><td><span class="d '+(r.pB>=0?'ok':'bad')+'">'+sgn(r.pB)+'</span> <small style="color:var(--muted)">'+ar(r.tB)+'/'+ar(r.bidB)+'</small></td><td>'+sn(run.B)+'</td></tr>';}).join('');
     const status=g.w?'<span class="wb">الفائز: '+esc(g.names[g.w==='A'?0:1])+'</span>':'ما انتهت';
-    return '<details class="game"><summary><span class="vs">'+esc(g.names[0])+' × '+esc(g.names[1])+'</span><span class="fs">'+sn(g.A)+' – '+sn(g.B)+'</span><span class="meta">'+fmtDate(g.date)+' · '+ar(g.rounds.length)+' جولة · '+status+'</span></summary>'
+    return '<details class="game"><summary><span class="vs">'+esc(g.names[0])+' × '+esc(g.names[1])+'</span><span class="fs">'+sn(g.A)+' – '+sn(g.B)+'</span><span class="meta">'+fmtDate(g.date)+' · '+ar(g.rounds.length)+' جولة · '+status+(g.referee?' · الحكم: '+esc(g.referee):'')+'</span></summary>'
       +'<div class="body"><div class="hint">'+esc(g.names[0])+pl(0)+'<br>'+esc(g.names[1])+pl(1)+'</div>'
       +'<div class="tbl"><table><thead><tr><th>#</th><th>'+esc(g.names[0])+'</th><th>المجموع</th><th>'+esc(g.names[1])+'</th><th>المجموع</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
       +'<div class="actions"><button class="secondary danger" type="button" data-adel="'+gi+'">حذف من الأرشيف</button></div></div></details>';
@@ -397,6 +403,7 @@ function render(){
   if(!started) return;
   const [A,B]=S.names, t=totals(), o=cur(), ed=!!S.ed;
   $('nameA').textContent=A; $('nameB').textContent=B;
+  $('refLine').hidden=!S.referee; $('refLine').textContent='الحكم: '+(S.referee||'');
   const P=S.players||[[],[]];
   $('plA').textContent=P[0].join(' و '); $('plB').textContent=P[1].join(' و ');
   for(const k of ['A','B']){
@@ -488,7 +495,7 @@ const DEFAULT_ROSTER=['بو حمود','بو سجاد','سيد نادر','عاش�
 let ROSTER=(()=>{let r=[];try{r=JSON.parse(localStorage.getItem('sbeeta-roster'))||[]}catch(e){} return [...new Set([...DEFAULT_ROSTER,...r])];})();
 function saveRoster(){try{localStorage.setItem('sbeeta-roster',JSON.stringify(ROSTER))}catch(e){}}
 const SEL=['pA1','pA2','pB1','pB2'], NEW='__new__';
-let pickVal={pA1:'بو آية عمار',pA2:'',pB1:'بو عزيز',pB2:''}, newFor=null;
+let pickVal={pA1:'بو حمود',pA2:'',pB1:'بو عزيز',pB2:'',ref:'بو سجاد'}, newFor=null;
 function fillSelects(){
   const taken=k=>SEL.filter(x=>x!==k).map(x=>pickVal[x]).filter(Boolean);
   SEL.forEach(k=>{
@@ -498,8 +505,11 @@ function fillSelects(){
     h+='<option value="'+NEW+'">+ لاعب جديد</option>';
     $(k).innerHTML=h; $(k).value=pickVal[k]||'';
   });
+  // referee list always shows everyone: the scorer can also be playing
+  $('ref').innerHTML='<option value="">— بدون —</option>'+ROSTER.map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join('')+'<option value="'+NEW+'">+ اسم جديد</option>';
+  $('ref').value=pickVal.ref||'';
 }
-SEL.forEach(k=>$(k).addEventListener('change',()=>{
+[...SEL,'ref'].forEach(k=>$(k).addEventListener('change',()=>{
   const v=$(k).value;
   if(v===NEW){newFor=k;$('newBox').hidden=false;$('newName').value='';$('newWarn').textContent='';$(k).value=pickVal[k]||'';$('newName').focus();return;}
   pickVal[k]=v; fillSelects();
@@ -508,7 +518,7 @@ $('addP').onclick=()=>{
   const n=$('newName').value.trim().replace(/\s+/g,' ');
   if(!n){$('newWarn').textContent='اكتب الاسم أول.';return;}
   if(!ROSTER.includes(n)){ROSTER.push(n);saveRoster();}
-  if(SEL.some(x=>x!==newFor&&pickVal[x]===n)){$('newWarn').textContent=n+' مختار بالفريق الثاني.';fillSelects();return;}
+  if(newFor!=='ref'&&SEL.some(x=>x!==newFor&&pickVal[x]===n)){$('newWarn').textContent=n+' مختار بالفريق الثاني.';fillSelects();return;}
   pickVal[newFor]=n; newFor=null; $('newBox').hidden=true; fillSelects();
 };
 $('cancelP').onclick=()=>{newFor=null;$('newBox').hidden=true;};
@@ -517,7 +527,7 @@ fillSelects();
 $('startBtn').onclick=()=>{
   if(!pickVal.pA1||!pickVal.pB1) return;
   const pl=(x,y)=>[pickVal[x],pickVal[y]].filter(Boolean);
-  S=fresh(); S.names=[pickVal.pA1,pickVal.pB1]; S.players=[pl('pA1','pA2'),pl('pB1','pB2')]; render();
+  S=fresh(); S.names=[pickVal.pA1,pickVal.pB1]; S.players=[pl('pA1','pA2'),pl('pB1','pB2')]; S.referee=pickVal.ref||''; render();
 };
 $('archBtn').onclick=()=>{view=view==='archive'?'main':'archive';render();scrollTo({top:0});};
 let delArch=-1;
@@ -530,9 +540,9 @@ $('archList').addEventListener('click',e=>{
 });
 function newGame(){
   archiveCurrent();
-  const n=S.names,p=S.players||[[],[]];
+  const n=S.names,p=S.players||[[],[]],rf=S.referee||'';
   S=fresh();
-  if(n){pickVal={pA1:p[0][0]||n[0],pA2:p[0][1]||'',pB1:p[1][0]||n[1],pB2:p[1][1]||''};
+  if(n){pickVal={pA1:p[0][0]||n[0],pA2:p[0][1]||'',pB1:p[1][0]||n[1],pB2:p[1][1]||'',ref:rf};
     SEL.forEach(k=>{if(pickVal[k]&&!ROSTER.includes(pickVal[k])){ROSTER.push(pickVal[k]);saveRoster();}});}
   fillSelects();
   hideWin(); view='main'; render(); scrollTo({top:0});
