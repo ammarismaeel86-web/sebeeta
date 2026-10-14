@@ -13,7 +13,7 @@
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:#141414}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 <title>سبيتة الفارة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=Cairo:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
 <style>
 /* Layout: one-column card table — felt ground, two ivory "cards" (teams) side by side, round panel below, ledger last */
 :root{
@@ -22,6 +22,7 @@
   --line:#e2e2e2; --gold:#d0202e; --red:#d0202e; --win:#111111; --tint:#fbeaec;
   --on-felt:#ffffff; --on-felt-dim:#a3a3a3;
   --display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --num:"Cairo","IBM Plex Sans Arabic",system-ui,sans-serif;
   --body:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
   color-scheme:light;
 }
@@ -60,7 +61,27 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:4px}
 .bar i{display:block;height:100%;background:var(--ink);border-radius:3px;transition:width .4s}
 .lead .bar i{background:var(--gold)}
-.crown{font-size:.7rem;letter-spacing:.04em;color:var(--gold);font-weight:700;min-height:1.1em}
+.crown{font-size:.72rem;color:var(--ink);font-weight:700;min-height:1.1em}
+.team .score,.step input,table,.team .togo,.chip,.pts,.game .fs,.wincard .final{font-family:var(--num)}
+.team .score{font-weight:800;letter-spacing:0}
+.step input{font-weight:800}
+.team{cursor:default}
+.team.dealer{box-shadow:0 0 0 3px var(--red),0 10px 24px -12px rgba(0,0,0,.55)}
+.deal{align-self:center;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-top:-6px}
+.team.pick{cursor:pointer}
+.box{border-radius:12px;padding:12px 12px 4px;display:flex;flex-direction:column;gap:2px}
+.boxhead{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:700;font-size:.95rem}
+.boxhead small{font-weight:500;font-size:.75rem;opacity:.75}
+.box.bid{border:2px solid var(--red);background:var(--tint)}
+.box.bid .boxhead{color:var(--red)}
+.box.bid .row{border-top-color:#f0c4c8}
+.box.tricks{background:var(--ink);color:#fff}
+.box.tricks .row{border-top-color:#3a3a3a}
+.box.tricks .row .lbl small{color:#bdbdbd}
+.box.tricks .step button{border-color:#fff;color:#fff}
+.box.tricks .step input{color:#fff;border-bottom-color:#555}
+.box.tricks .step input.bad{color:#ff6b75;border-bottom-color:#ff6b75}
+.box.tricks .pts.ok{color:#fff}.box.tricks .pts.bad{color:#ff6b75}
 
 .panel{padding:20px 16px 18px;display:flex;flex-direction:column;gap:14px}
 .panel.editing{outline:3px solid var(--gold);outline-offset:-3px}
@@ -196,10 +217,10 @@ tr.on td{background:var(--tint)}
     <div class="wrap">
       <div class="teams">
         <div class="card team" id="tA"><span class="pip tl">ش<b>♠</b></span><span class="pip br">ش<b>♠</b></span>
-          <div class="crown" id="cA"></div><div class="name" id="nameA"></div><div class="players" id="plA"></div><div class="score" id="sA">0</div>
+          <div class="crown" id="cA"></div><div class="deal" id="dA" hidden>♠ يوزّع الورق</div><div class="name" id="nameA"></div><div class="players" id="plA"></div><div class="score" id="sA">0</div>
           <div class="bar"><i id="bA" style="width:0"></i></div><div class="togo" id="gA"></div></div>
         <div class="card team" id="tB"><span class="pip tl">ب<b>♠</b></span><span class="pip br">ب<b>♠</b></span>
-          <div class="crown" id="cB"></div><div class="name" id="nameB"></div><div class="players" id="plB"></div><div class="score" id="sB">0</div>
+          <div class="crown" id="cB"></div><div class="deal" id="dB" hidden>♠ يوزّع الورق</div><div class="name" id="nameB"></div><div class="players" id="plB"></div><div class="score" id="sB">0</div>
           <div class="bar"><i id="bB" style="width:0"></i></div><div class="togo" id="gB"></div></div>
       </div>
 
@@ -207,8 +228,8 @@ tr.on td{background:var(--tint)}
         <h2><span id="pTitle">الشراء</span><span class="chip" id="roundChip">الجولة ١</span></h2>
         <p class="hint" id="pHint"></p>
 
-        <div id="bidBox">
-          <div class="sect" id="bidSect">الشراء</div>
+        <div id="bidBox" class="box bid">
+          <div class="boxhead"><span>♦ الشراء</span><small>قبل اللعب · من ٤ إلى ١٣</small></div>
           <div class="rows">
             <div class="row"><div class="lbl"><strong id="bLA"></strong><small id="bPA"></small></div>
               <div class="step"><button type="button" data-k="bidA" data-d="-1" aria-label="نقص">−</button><input id="in-bidA" data-k="bidA" inputmode="numeric" autocomplete="off" aria-label="شراء الفريق الأول"><button type="button" data-k="bidA" data-d="1" aria-label="زيد">+</button></div></div>
@@ -217,8 +238,8 @@ tr.on td{background:var(--tint)}
           </div>
         </div>
 
-        <div id="trickBox" hidden>
-          <div class="sect" id="trickSect">الأكلات</div>
+        <div id="trickBox" class="box tricks" hidden>
+          <div class="boxhead"><span>♠ الأكلات</span><small>بعد اللعب · المجموع ١٣</small></div>
           <div class="rows">
             <div class="row"><div class="lbl"><strong id="tLA"></strong><small id="tSA"></small></div>
               <div class="step"><button type="button" data-k="tricksA" data-d="-1" aria-label="نقص">−</button><input id="in-tricksA" data-k="tricksA" inputmode="numeric" autocomplete="off" aria-label="أكلات الفريق الأول"><button type="button" data-k="tricksA" data-d="1" aria-label="زيد">+</button></div></div>
@@ -246,7 +267,7 @@ tr.on td{background:var(--tint)}
       </section>
     </div>
   </div>
-  <p class="foot">الحساب محفوظ في هذا المتصفح · الأرقام تنكتب عربي أو إنجليزي</p>
+  <p class="foot">الحساب محفوظ في هذا الجهاز · الأرقام تنكتب عربي أو إنجليزي<br>© جميع حقوق البرمجة محفوظة لـ عمار بوآية</p>
 </div>
 
 <div class="win" id="win" hidden>
@@ -331,23 +352,28 @@ function render(){
     const v=t[k], el=$('s'+k);
     el.textContent=sn(v); el.classList.toggle('neg',v<0);
     $('b'+k).style.width=Math.max(0,Math.min(100,v/TARGET*100))+'%';
-    $('g'+k).textContent=v>=TARGET?'وصل ٦٠٠':'باقي '+ar(TARGET-v);
+    $('g'+k).textContent=v>=TARGET?'وصل ٦٠٠':'باقي '+ar(TARGET-v)+' ('+ar(Math.round((TARGET-v)/10))+' أكلة)';
   }
   const lead=t.A===t.B?null:(t.A>t.B?'A':'B');
   $('tA').classList.toggle('lead',lead==='A'); $('tB').classList.toggle('lead',lead==='B');
   $('cA').textContent=lead==='A'?'متقدم':''; $('cB').textContent=lead==='B'?'متقدم':'';
   if(t.A>=TARGET&&t.A===t.B){$('cA').textContent=$('cB').textContent='تعادل · كمّلوا';}
+  // trailing team deals; on a tie the players pick by tapping a card
+  if(t.A!==t.B) S.tieDealer=null;
+  const dealer=t.A<t.B?'A':t.B<t.A?'B':(S.tieDealer||null);
+  for(const k of ['A','B']){ $('d'+k).hidden=dealer!==k; $('t'+k).classList.toggle('dealer',dealer===k); $('t'+k).classList.toggle('pick',t.A===t.B); }
+  if(t.A===t.B&&!dealer){$('cA').textContent=$('cB').textContent='تعادل · اضغط على الموزّع';}
+  const dealerName=dealer?(dealer==='A'?A:B):null;
 
   const bidPhase=!ed&&S.phase==='bid';
   $('panel').classList.toggle('editing',ed);
   $('roundChip').textContent='الجولة '+ar(ed?S.ed.i+1:S.rounds.length+1);
   $('bidBox').hidden=!(ed||bidPhase); $('trickBox').hidden=bidPhase;
-  $('bidSect').hidden=!ed; $('trickSect').hidden=!ed;
   $('backBtn').hidden=bidPhase; $('backBtn').textContent=ed?'إلغاء':'رجوع';
   $('delBtn').hidden=!ed;
   $('pTitle').textContent=ed?'تعديل الجولة':bidPhase?'الشراء':'الأكلات';
   $('pHint').textContent=ed?'صحّح الشراء أو الأكلات، والمجموع ينحسب من جديد.'
-    :bidPhase?'حددوا كم أكلة يشتري كل فريق قبل اللعب.':'بعد اللعب: كم أكلة أكل كل فريق؟ المجموع لازم ١٣.';
+    :bidPhase?(dealerName?'يوزّع الورق: '+dealerName+'. ':'')+'حددوا كم أكلة يشتري كل فريق.':'بعد اللعب: كم أكلة أكل كل فريق؟ المجموع لازم ١٣.';
   $('bLA').textContent=A; $('bLB').textContent=B;
   $('bPA').textContent='يكسب '+ar(o.bidA*10)+' أو يخسر '+ar(o.bidA*10);
   $('bPB').textContent='يكسب '+ar(o.bidB*10)+' أو يخسر '+ar(o.bidB*10);
@@ -374,7 +400,7 @@ function render(){
   $('log').innerHTML=S.rounds.map((r,i)=>{run.A+=r.pA;run.B+=r.pB;
     const c=(p,bd,tk)=>'<td><span class="d '+(p>=0?'ok':'bad')+'">'+sgn(p)+'</span><br><small style="color:var(--muted)">'+ar(tk)+'/'+ar(bd)+'</small></td>';
     return '<tr'+(ed&&S.ed.i===i?' class="on"':'')+'><td class="n">'+ar(i+1)+'</td>'+c(r.pA,r.bidA,r.tA)+'<td>'+sn(run.A)+'</td>'+c(r.pB,r.bidB,r.tB)+'<td>'+sn(run.B)+'</td><td><button class="ed" type="button" data-edit="'+i+'">تعديل</button></td></tr>';
-  }).reverse().join('');
+  }).join('');
   $('empty').hidden=S.rounds.length>0;
   const w=winner(t.A,t.B);
   $('panel').hidden=!!w&&!ed;
@@ -453,6 +479,7 @@ $('newBtn').onclick=()=>{
   newGame();
 };
 $('againBtn').onclick=newGame;
+['A','B'].forEach(k=>$('t'+k).addEventListener('click',()=>{const t=totals(); if(t.A!==t.B) return; S.tieDealer=k; render();}));
 $('closeWin').onclick=hideWin;
 
 let raf=0;
