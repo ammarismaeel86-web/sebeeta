@@ -138,6 +138,12 @@ tr.on td{background:var(--tint)}
 .opt{font-weight:400;color:var(--muted);font-size:.75rem}
 .teamset{display:flex;flex-direction:column;gap:8px;padding-top:12px;border-top:1px dashed var(--line)}
 .teamset:first-of-type{border-top:0;padding-top:0}
+.sethead{font-family:var(--display);font-weight:700;font-size:1rem}
+.field select{font:inherit;font-size:1.05rem;padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%;appearance:auto}
+.newp{display:flex;flex-direction:column;gap:6px;padding:12px;border:2px dashed var(--red);border-radius:12px}
+.newp label{font-size:.85rem;font-weight:700;color:var(--red)}
+.newrow{display:flex;gap:8px;flex-wrap:wrap}
+.newrow input{flex:1 1 140px;min-width:0;font:inherit;font-size:1.05rem;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);background:transparent;color:var(--ink)}
 .arch{padding:18px 14px;display:flex;flex-direction:column;gap:10px}
 .arch h2{font-family:var(--display);font-size:1.15rem;margin:0}
 .game{border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -149,6 +155,21 @@ tr.on td{background:var(--tint)}
 .game .wb{color:var(--win);font-weight:700}
 .game .body{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
 .game[open] summary{background:var(--tint)}
+.stats{border-radius:12px;background:var(--ink);color:#fff;padding:14px 12px;display:flex;flex-direction:column;gap:8px}
+.stats h3{margin:0;font-family:var(--display);font-size:1.05rem;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.stats h3 small{font-family:var(--body);font-size:.72rem;font-weight:500;color:#bdbdbd}
+.champ{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:#fff;color:var(--ink)}
+.champ svg{width:34px;height:34px;flex:none;color:var(--red)}
+.champ .cn{font-family:var(--display);font-weight:700;font-size:1.25rem;overflow-wrap:anywhere;min-width:0;flex:1}
+.champ .cw{font-family:var(--num);font-weight:800;font-size:1.1rem;white-space:nowrap}
+.stats table{color:#fff}
+.stats th{color:#bdbdbd}
+.stats th,.stats td{border-bottom-color:#333}
+.stats td.tn{text-align:right;font-weight:700;overflow-wrap:anywhere}
+.stats tr.top td{color:#ff6b75}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#2a2a2a;border-radius:10px;padding:4px}
+.seg button{border:0;border-radius:8px;padding:8px;font:inherit;font-weight:700;background:transparent;color:#bdbdbd;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--red);color:#fff}
 .foot{color:var(--on-felt-dim);font-size:.75rem;text-align:center}
 
 .win{position:fixed;inset:0;display:grid;place-items:center;z-index:10;
@@ -187,6 +208,7 @@ tr.on td{background:var(--tint)}
   <section id="archive" class="card arch" hidden>
     <h2>أرشيف الرصد</h2>
     <p class="hint">كل لعبة تنحفظ هنا لما تبدأون لعبة جديدة. اضغط على اللعبة تشوف جولاتها.</p>
+    <div id="stats"></div>
     <div id="archList" style="display:flex;flex-direction:column;gap:8px"></div>
     <p class="empty" id="archEmpty">الأرشيف فاضي.</p>
   </section>
@@ -195,14 +217,19 @@ tr.on td{background:var(--tint)}
     <span class="pip tl">إ<b>♠</b></span>
     <h2>الفريقين</h2>
     <div class="teamset">
-      <div class="field"><label for="nA">الفريق الأول (باسم شخص)</label><input id="nA" maxlength="24" value="بو محمد" autocomplete="off"></div>
-      <div class="field"><label>اللاعبين <span class="opt">اختياري</span></label>
-        <div class="pair"><input id="pA1" maxlength="20" placeholder="لاعب ١" autocomplete="off"><input id="pA2" maxlength="20" placeholder="لاعب ٢" autocomplete="off"></div></div>
+      <div class="sethead">الفريق الأول</div>
+      <div class="field"><label for="pA1">اسم الفريق <span class="opt">وهو اللاعب الأول</span></label><select id="pA1"></select></div>
+      <div class="field"><label for="pA2">اللاعب الثاني <span class="opt">اختياري</span></label><select id="pA2"></select></div>
     </div>
     <div class="teamset">
-      <div class="field"><label for="nB">الفريق الثاني (باسم شخص)</label><input id="nB" maxlength="24" value="بو خالد" autocomplete="off"></div>
-      <div class="field"><label>اللاعبين <span class="opt">اختياري</span></label>
-        <div class="pair"><input id="pB1" maxlength="20" placeholder="لاعب ١" autocomplete="off"><input id="pB2" maxlength="20" placeholder="لاعب ٢" autocomplete="off"></div></div>
+      <div class="sethead">الفريق الثاني</div>
+      <div class="field"><label for="pB1">اسم الفريق <span class="opt">وهو اللاعب الأول</span></label><select id="pB1"></select></div>
+      <div class="field"><label for="pB2">اللاعب الثاني <span class="opt">اختياري</span></label><select id="pB2"></select></div>
+    </div>
+    <div class="newp" id="newBox" hidden>
+      <label for="newName">اسم اللاعب الجديد</label>
+      <div class="newrow"><input id="newName" maxlength="20" autocomplete="off"><button class="secondary" id="addP" type="button">إضافة</button><button class="secondary" id="cancelP" type="button">إلغاء</button></div>
+      <p class="warn" id="newWarn"></p>
     </div>
     <ul class="rules">
       <li>شراء كل فريق من ٤ إلى ١٣ أكلة (كل أكلة = ١٠ نقاط)</li>
@@ -312,7 +339,31 @@ function archiveCurrent(){
 }
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function fmtDate(ms){try{return new Intl.DateTimeFormat('ar',{dateStyle:'medium',timeStyle:'short'}).format(ms)}catch(e){return new Date(ms).toLocaleString()}}
+let statMode='team';
+// team = the pair of players (order ignored); player = each person on their own
+function renderStats(){
+  const m={}, add=(k,label,won,sc)=>{m[k]=m[k]||{n:label,p:0,w:0,best:-Infinity}; m[k].p++; if(won)m[k].w++; if(sc>m[k].best)m[k].best=sc;};
+  for(const g of ARCH){ if(!g.w) continue;
+    g.names.forEach((n,i)=>{
+      const pl=((g.players&&g.players[i])||[]).map(x=>x.trim()).filter(Boolean);
+      const people=pl.length?pl:[n.trim()];
+      const won=(g.w==='A')===(i===0), sc=i===0?g.A:g.B;
+      if(statMode==='team'){ const key=[...people].sort().join('|'); add(key,people.join(' و '),won,sc); }
+      else people.forEach(x=>add(x,x,won,sc));
+    });
+  }
+  const L=Object.values(m).sort((a,b)=>b.w-a.w||(b.w/b.p)-(a.w/a.p)||b.best-a.best);
+  if(!L.length){$('stats').innerHTML='';return;}
+  const fin=ARCH.filter(g=>g.w).length, top=L[0], T=statMode==='team';
+  $('stats').innerHTML='<div class="stats"><h3>إحصائيات الفوز<small>من '+ar(fin)+' لعبة منتهية</small></h3>'
+   +'<div class="seg" role="tablist"><button type="button" data-sm="team" aria-selected="'+T+'">كفريق</button><button type="button" data-sm="player" aria-selected="'+(!T)+'">كفرد</button></div>'
+   +'<div class="champ"><svg viewBox="0 0 100 110"><use href="#spade"/></svg><div class="cn">'+esc(top.n)+'<div class="hint" style="font-family:var(--body);font-size:.75rem;font-weight:500">الأكثر فوزاً</div></div><div class="cw">'+ar(top.w)+' فوز</div></div>'
+   +'<div class="tbl"><table><thead><tr><th>#</th><th style="text-align:right">'+(T?'الفريق':'اللاعب')+'</th><th>فاز</th><th>لعب</th><th>النسبة</th><th>أعلى نتيجة</th></tr></thead><tbody>'
+   +L.map((r,i)=>'<tr'+(i===0?' class="top"':'')+'><td>'+ar(i+1)+'</td><td class="tn">'+esc(r.n)+'</td><td>'+ar(r.w)+'</td><td>'+ar(r.p)+'</td><td>'+ar(Math.round(r.w/r.p*100))+'٪</td><td>'+sn(r.best)+'</td></tr>').join('')
+   +'</tbody></table></div></div>';
+}
 function renderArch(){
+  renderStats();
   $('archEmpty').hidden=ARCH.length>0;
   $('archList').innerHTML=ARCH.map((g,gi)=>{
     const pl=i=>(g.players&&g.players[i]&&g.players[i].length)?' ('+g.players[i].map(esc).join(' و ')+')':'';
@@ -432,13 +483,45 @@ document.querySelectorAll('.step input').forEach(inp=>{
   inp.addEventListener('keydown',e=>{if(e.key==='Enter') inp.blur();});
 });
 
+// player roster: known names as dropdowns; new players get added and remembered
+const DEFAULT_ROSTER=['بو حمود','بو سجاد','سيد نادر','عاشور','بو عزيز','بو صادق','ربيع','القيدوم','بو طلال','الحجري','سيد جواد','بو آية عمار','جعفر الجار','بو هادي','بو حسن','فاضل'];
+let ROSTER=(()=>{let r=[];try{r=JSON.parse(localStorage.getItem('sbeeta-roster'))||[]}catch(e){} return [...new Set([...DEFAULT_ROSTER,...r])];})();
+function saveRoster(){try{localStorage.setItem('sbeeta-roster',JSON.stringify(ROSTER))}catch(e){}}
+const SEL=['pA1','pA2','pB1','pB2'], NEW='__new__';
+let pickVal={pA1:'بو آية عمار',pA2:'',pB1:'بو عزيز',pB2:''}, newFor=null;
+function fillSelects(){
+  const taken=k=>SEL.filter(x=>x!==k).map(x=>pickVal[x]).filter(Boolean);
+  SEL.forEach(k=>{
+    const opt2=k.endsWith('2'), t=taken(k);
+    let h=(opt2?'<option value="">— بدون —</option>':'<option value="" disabled>اختر لاعب</option>');
+    h+=ROSTER.filter(n=>!t.includes(n)).map(n=>'<option value="'+esc(n)+'">'+esc(n)+'</option>').join('');
+    h+='<option value="'+NEW+'">+ لاعب جديد</option>';
+    $(k).innerHTML=h; $(k).value=pickVal[k]||'';
+  });
+}
+SEL.forEach(k=>$(k).addEventListener('change',()=>{
+  const v=$(k).value;
+  if(v===NEW){newFor=k;$('newBox').hidden=false;$('newName').value='';$('newWarn').textContent='';$(k).value=pickVal[k]||'';$('newName').focus();return;}
+  pickVal[k]=v; fillSelects();
+}));
+$('addP').onclick=()=>{
+  const n=$('newName').value.trim().replace(/\s+/g,' ');
+  if(!n){$('newWarn').textContent='اكتب الاسم أول.';return;}
+  if(!ROSTER.includes(n)){ROSTER.push(n);saveRoster();}
+  if(SEL.some(x=>x!==newFor&&pickVal[x]===n)){$('newWarn').textContent=n+' مختار بالفريق الثاني.';fillSelects();return;}
+  pickVal[newFor]=n; newFor=null; $('newBox').hidden=true; fillSelects();
+};
+$('cancelP').onclick=()=>{newFor=null;$('newBox').hidden=true;};
+$('newName').addEventListener('keydown',e=>{if(e.key==='Enter')$('addP').click();});
+fillSelects();
 $('startBtn').onclick=()=>{
-  const a=$('nA').value.trim()||'الفريق الأول', b=$('nB').value.trim()||'الفريق الثاني';
-  const pl=(x,y)=>[$(x).value.trim(),$(y).value.trim()].filter(Boolean);
-  S=fresh(); S.names=[a,b]; S.players=[pl('pA1','pA2'),pl('pB1','pB2')]; render();
+  if(!pickVal.pA1||!pickVal.pB1) return;
+  const pl=(x,y)=>[pickVal[x],pickVal[y]].filter(Boolean);
+  S=fresh(); S.names=[pickVal.pA1,pickVal.pB1]; S.players=[pl('pA1','pA2'),pl('pB1','pB2')]; render();
 };
 $('archBtn').onclick=()=>{view=view==='archive'?'main':'archive';render();scrollTo({top:0});};
 let delArch=-1;
+$('stats').addEventListener('click',e=>{const b=e.target.closest('[data-sm]'); if(!b) return; statMode=b.dataset.sm; renderStats();});
 $('archList').addEventListener('click',e=>{
   const b=e.target.closest('[data-adel]'); if(!b) return;
   const i=+b.dataset.adel;
@@ -449,8 +532,9 @@ function newGame(){
   archiveCurrent();
   const n=S.names,p=S.players||[[],[]];
   S=fresh();
-  if(n){$('nA').value=n[0];$('nB').value=n[1];}
-  $('pA1').value=p[0][0]||'';$('pA2').value=p[0][1]||'';$('pB1').value=p[1][0]||'';$('pB2').value=p[1][1]||'';
+  if(n){pickVal={pA1:p[0][0]||n[0],pA2:p[0][1]||'',pB1:p[1][0]||n[1],pB2:p[1][1]||''};
+    SEL.forEach(k=>{if(pickVal[k]&&!ROSTER.includes(pickVal[k])){ROSTER.push(pickVal[k]);saveRoster();}});}
+  fillSelects();
   hideWin(); view='main'; render(); scrollTo({top:0});
 }
 $('goBtn').onclick=()=>{
