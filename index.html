@@ -55,14 +55,14 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .team{padding:26px 14px 18px;min-width:0;text-align:center;display:flex;flex-direction:column;gap:6px;transition:transform .25s}
 .team.lead{transform:translateY(-4px)}
 .team .name{font-family:var(--display);font-size:1.05rem;font-weight:700;overflow-wrap:anywhere}
-.team .score{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.team .score{font-family:var(--num);font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .team .score.neg{color:var(--red)}
 .team .togo{font-size:.78rem;color:var(--muted)}
 .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:4px}
 .bar i{display:block;height:100%;background:var(--ink);border-radius:3px;transition:width .4s}
 .lead .bar i{background:var(--gold)}
 .crown{font-size:.72rem;color:var(--ink);font-weight:700;min-height:1.1em}
-.team .score,.step input,table,.team .togo,.chip,.pts,.game .fs,.wincard .final{font-family:var(--num)}
+.team .score,.step input,table,.team .togo,.chip,.pts,.game .fs,.wincard .final,.row .lbl small,.game .meta,.refline,.sub{font-family:var(--num)}
 .team .score{font-weight:800;letter-spacing:0}
 .step input{font-weight:800}
 .team{cursor:default}
@@ -98,7 +98,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .step button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
   font-size:1.4rem;font-weight:700;cursor:pointer;line-height:1}
 .step button:disabled{opacity:.25;cursor:default}
-.step input{width:56px;height:44px;text-align:center;font-family:var(--display);font-size:1.6rem;font-weight:700;font-variant-numeric:tabular-nums;
+.step input{width:56px;height:44px;text-align:center;font-family:var(--num);font-size:1.7rem;font-weight:800;font-variant-numeric:tabular-nums;
   border:0;border-bottom:2px solid var(--line);background:transparent;color:var(--ink);border-radius:0;padding:0}
 .step input:focus{border-bottom-color:var(--gold);outline:none}
 .step input.bad{border-bottom-color:var(--red);color:var(--red)}
@@ -152,7 +152,7 @@ tr.on td{background:var(--tint)}
 .game summary{list-style:none;cursor:pointer;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center}
 .game summary::-webkit-details-marker{display:none}
 .game .vs{font-weight:700;overflow-wrap:anywhere;min-width:0}
-.game .fs{font-family:var(--display);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.game .fs{font-family:var(--num);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .game .meta{grid-column:1/-1;font-size:.75rem;color:var(--muted)}
 .game .wb{color:var(--win);font-weight:700}
 .game .body{padding:0 12px 12px;display:flex;flex-direction:column;gap:8px}
