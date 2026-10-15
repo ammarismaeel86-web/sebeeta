@@ -58,22 +58,32 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .pip b{display:block;font-size:1.05rem}
 
 .teams{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.team{padding:26px 14px 18px;min-width:0;text-align:center;display:flex;flex-direction:column;gap:6px;transition:transform .25s}
+/* team card = a face card: framed, corner indices, suit watermark, score dial */
+.team{--suit:var(--ink);padding:30px 12px 16px;min-width:0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+#tB{--suit:var(--red)}
+.team .frame{position:absolute;inset:6px;border:1.5px solid var(--suit);opacity:.25;border-radius:10px;pointer-events:none}
+.team .pip{color:var(--suit);background:var(--card);padding:2px 3px;z-index:1}
 .team.lead{transform:translateY(-4px)}
-.team .name{font-family:var(--display);font-size:1.05rem;font-weight:700;overflow-wrap:anywhere}
-.team .score{font-family:var(--num);font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.cap{display:flex;flex-direction:column;align-items:center;gap:0;min-width:0;max-width:100%;z-index:1}
+.cap small{font-size:.66rem;font-weight:700;letter-spacing:.08em;color:var(--suit);opacity:.85}
+.team .name{font-family:var(--display);font-size:1.5rem;font-weight:700;line-height:1.2;overflow-wrap:anywhere;text-wrap:balance}
+.team .players{font-size:.78rem;color:var(--muted);overflow-wrap:anywhere;min-height:1.2em}
+.dial{position:relative;width:120px;max-width:100%;aspect-ratio:1;display:grid;place-items:center}
+.dial .water{position:absolute;inset:16% 18%;width:64%;height:68%;color:var(--suit);opacity:.07}
+.dial .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring .trk{fill:none;stroke:var(--line);stroke-width:7}
+.ring .prog{fill:none;stroke:var(--suit);stroke-width:7;stroke-linecap:round;stroke-dasharray:339.3;stroke-dashoffset:339.3;transition:stroke-dashoffset .5s}
+.team .score{font-family:var(--num);font-size:2.4rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;z-index:1}
 .team .score.neg{color:var(--red)}
-.team .togo{font-size:.78rem;color:var(--muted)}
-.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:4px}
-.bar i{display:block;height:100%;background:var(--ink);border-radius:3px;transition:width .4s}
-.lead .bar i{background:var(--gold)}
-.crown{font-size:.72rem;color:var(--ink);font-weight:700;min-height:1.1em}
+.team .togo{font-size:.8rem;color:var(--muted)}
+.crown{font-size:.72rem;font-weight:700;min-height:1.4em;color:var(--card);background:var(--suit);border-radius:999px;padding:2px 10px}
+.crown:empty{background:none;padding:0}
+.ribbon{position:absolute;top:16px;left:-36px;width:140px;transform:rotate(-45deg);background:var(--red);color:#fff;font-size:.72rem;font-weight:700;padding:4px 0;text-align:center;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,.25)}
 .team .score,.step input,table,.team .togo,.chip,.pts,.game .fs,.wincard .final,.row .lbl small,.game .meta,.refline,.sub{font-family:var(--num)}
 .team .score{font-weight:800;letter-spacing:0}
 .step input{font-weight:800}
 .team{cursor:default}
 .team.dealer{box-shadow:0 0 0 3px var(--red),0 10px 24px -12px rgba(0,0,0,.55)}
-.deal{align-self:center;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:999px;margin-top:-6px}
 .team.pick{cursor:pointer}
 .box{border-radius:12px;padding:12px 12px 4px;display:flex;flex-direction:column;gap:2px}
 .boxhead{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:700;font-size:.95rem}
@@ -136,9 +146,8 @@ tr.on td{background:var(--tint)}
 .d{font-weight:700}.d.ok{color:var(--win)}.d.bad{color:var(--red)}
 .ed{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:4px 8px;font:inherit;font-size:.75rem;cursor:pointer}
 .empty{color:var(--muted);font-size:.85rem;text-align:center;padding:10px 0;margin:0}
-.hbtns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.hbtns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:none}
 .ghost.solid{background:var(--card);color:var(--ink);border-color:var(--card);font-weight:700}
-.team .players{font-size:.75rem;color:var(--muted);overflow-wrap:anywhere;margin-top:-4px}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .pair input{font-size:.92rem;padding:9px 12px}
 .opt{font-weight:400;color:var(--muted);font-size:.75rem}
@@ -192,12 +201,13 @@ tr.on td{background:var(--tint)}
 .wincard .final{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.95rem}
 .wincard .primary{margin-top:10px}
 @keyframes flip{from{transform:perspective(800px) rotateY(90deg) scale(.8);opacity:0}to{transform:none;opacity:1}}
-@media (prefers-reduced-motion: reduce){.wincard{animation:none}.team,.bar i{transition:none}}
+@media (prefers-reduced-motion: reduce){.wincard{animation:none}.team,.ring .prog{transition:none}}
 </style>
 
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="heart" viewBox="0 0 100 110"><path fill="currentColor" d="M50 100C20 75 4 58 4 36 4 18 18 6 33 6c8 0 14 4 17 10 3-6 9-10 17-10 15 0 29 12 29 30 0 22-16 39-46 64z"/></symbol>
   <symbol id="spade" viewBox="0 0 100 110"><path fill="currentColor" d="M50 4C38 26 6 42 6 66c0 14 11 24 24 24 8 0 14-3 17-8-1 10-5 17-13 24h32c-8-7-12-14-13-24 3 5 9 8 17 8 13 0 24-10 24-24C94 42 62 26 50 4z"/></symbol>
 </svg>
 
@@ -205,7 +215,7 @@ tr.on td{background:var(--tint)}
   <header>
     <div class="brand">
       <svg style="color:var(--on-felt)"><use href="#spade"/></svg>
-      <div><h1>سبيتة الفارة</h1><div class="sub">الحكم السبيت ♠ · الفوز عند ٦٠٠</div></div>
+      <div><h1>سبيتة الفارة</h1><div class="sub">الفوز عند ٦٠٠</div></div>
     </div>
     <div class="hbtns">
       <button class="ghost" id="archBtn" type="button">الأرشيف</button>
@@ -255,12 +265,22 @@ tr.on td{background:var(--tint)}
     <div class="wrap">
       <div class="refline" id="refLine" hidden></div>
       <div class="teams">
-        <div class="card team" id="tA"><span class="pip tl">ش<b>♠</b></span><span class="pip br">ش<b>♠</b></span>
-          <div class="crown" id="cA"></div><div class="deal" id="dA" hidden>♠ يوزّع الورق</div><div class="name" id="nameA"></div><div class="players" id="plA"></div><div class="score" id="sA">0</div>
-          <div class="bar"><i id="bA" style="width:0"></i></div><div class="togo" id="gA"></div></div>
-        <div class="card team" id="tB"><span class="pip tl">ب<b>♠</b></span><span class="pip br">ب<b>♠</b></span>
-          <div class="crown" id="cB"></div><div class="deal" id="dB" hidden>♠ يوزّع الورق</div><div class="name" id="nameB"></div><div class="players" id="plB"></div><div class="score" id="sB">0</div>
-          <div class="bar"><i id="bB" style="width:0"></i></div><div class="togo" id="gB"></div></div>
+        <div class="card team" id="tA"><div class="frame"></div><span class="pip tl">ش<b>♠</b></span><span class="pip br"><b>♠</b></span>
+          <div class="ribbon" id="dA" hidden>يوزّع</div>
+          <div class="cap"><small>القائد</small><div class="name" id="nameA"></div><div class="players" id="plA"></div></div>
+          <div class="dial"><svg class="water" viewBox="0 0 100 110" aria-hidden="true"><use href="#spade"/></svg>
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="trk" cx="60" cy="60" r="54"/><circle class="prog" id="bA" cx="60" cy="60" r="54"/></svg>
+            <div class="score" id="sA">0</div></div>
+          <div class="togo" id="gA"></div>
+          <div class="crown" id="cA"></div></div>
+        <div class="card team" id="tB"><div class="frame"></div><span class="pip tl">ب<b>♥</b></span><span class="pip br"><b>♥</b></span>
+          <div class="ribbon" id="dB" hidden>يوزّع</div>
+          <div class="cap"><small>القائد</small><div class="name" id="nameB"></div><div class="players" id="plB"></div></div>
+          <div class="dial"><svg class="water" viewBox="0 0 100 110" aria-hidden="true"><use href="#heart"/></svg>
+            <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="trk" cx="60" cy="60" r="54"/><circle class="prog" id="bB" cx="60" cy="60" r="54"/></svg>
+            <div class="score" id="sB">0</div></div>
+          <div class="togo" id="gB"></div>
+          <div class="crown" id="cB"></div></div>
       </div>
 
       <section class="card panel" id="panel">
@@ -325,8 +345,8 @@ tr.on td{background:var(--tint)}
 <script>
 const TARGET=600, MIN=4, MAX=13, TOTAL=13;
 const ar=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
-const sgn=n=>(n>0?'+':n<0?'−':'')+ar(Math.abs(n));
-const sn=n=>n<0?'−'+ar(-n):ar(n);
+const sgn=n=>'\u2068'+(n>0?'+':n<0?'−':'')+ar(Math.abs(n))+'\u2069'; // isolate so the sign stays in front
+const sn=n=>n<0?'\u2068−'+ar(-n)+'\u2069':ar(n);
 // accepts 0-9, ٠-٩ and ۰-۹
 function toNum(s){
   const t=String(s).replace(/[٠-٩]/g,c=>c.charCodeAt(0)-0x660).replace(/[۰-۹]/g,c=>c.charCodeAt(0)-0x6F0).replace(/[^0-9]/g,'');
@@ -411,11 +431,12 @@ function render(){
   $('nameA').textContent=A; $('nameB').textContent=B;
   $('refLine').hidden=!S.referee; $('refLine').textContent='الحكم: '+(S.referee||'');
   const P=S.players||[[],[]];
-  $('plA').textContent=P[0].join(' و '); $('plB').textContent=P[1].join(' و ');
+  // captain = first player (team name); partner shown under it
+  $('plA').textContent=P[0][1]?'مع '+P[0][1]:''; $('plB').textContent=P[1][1]?'مع '+P[1][1]:'';
   for(const k of ['A','B']){
     const v=t[k], el=$('s'+k);
     el.textContent=sn(v); el.classList.toggle('neg',v<0);
-    $('b'+k).style.width=Math.max(0,Math.min(100,v/TARGET*100))+'%';
+    $('b'+k).style.strokeDashoffset=339.3*(1-Math.max(0,Math.min(1,v/TARGET)));
     $('g'+k).textContent=v>=TARGET?'وصل ٦٠٠':'باقي '+ar(TARGET-v)+' ('+ar(Math.round((TARGET-v)/10))+' أكلة)';
   }
   const lead=t.A===t.B?null:(t.A>t.B?'A':'B');
@@ -426,7 +447,7 @@ function render(){
   if(t.A!==t.B) S.tieDealer=null;
   const dealer=t.A<t.B?'A':t.B<t.A?'B':(S.tieDealer||null);
   for(const k of ['A','B']){ $('d'+k).hidden=dealer!==k; $('t'+k).classList.toggle('dealer',dealer===k); $('t'+k).classList.toggle('pick',t.A===t.B); }
-  if(t.A===t.B&&!dealer){$('cA').textContent=$('cB').textContent='تعادل · اضغط على الموزّع';}
+  if(t.A===t.B&&!dealer){$('cA').textContent=$('cB').textContent='اضغط إذا يوزّع';}
   const dealerName=dealer?(dealer==='A'?A:B):null;
 
   const bidPhase=!ed&&S.phase==='bid';
